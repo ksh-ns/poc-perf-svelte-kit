@@ -1,5 +1,3 @@
-// const cssnano = require("cssnano");
-
 const mode = process.env.NODE_ENV;
 const dev = mode === "development";
 
@@ -7,13 +5,9 @@ module.exports = {
   plugins: [
     require("postcss-import")(),
     require("tailwindcss")(),
-
-    // Plugins for polyfills and the like (such as postcss-preset-env) should generally go here
-    // but a few have to run *before* Tailwind
-
-    // !dev &&
-    //   cssnano({
-    //     preset: ["default", { discardComments: { removeAll: true } }],
-    //   }),
+    !dev &&
+      require("cssnano")({
+        preset: ["default", { discardComments: { removeAll: true } }],
+      }),
   ].filter(Boolean),
 };
